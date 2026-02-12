@@ -1,8 +1,8 @@
 {
-  "email": "kr9ka4@gmail.com",
-  "name": "Stanislav D",
-  "courier_id": "1505811",
-  "poll_minutes": 10,
+  "email": "example@gmail.com",
+  "name": "Name Surname",
+  "courier_id": "123456",
+  "poll_minutes": 10,  
   "headless": true,
   "report_path": "reports.json"
 }
