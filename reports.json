@@ -1,0 +1,31 @@
+[
+  {
+    "timestamp": "2026-02-13T00:25:32.359515",
+    "available": false,
+    "shifts": [],
+    "error": "Locator.fill: Timeout 30000ms exceeded.\nCall log:\n  - waiting for get_by_label(re.compile(r\"Elektroniczna poczta|Email\", re.IGNORECASE))\n"
+  },
+  {
+    "timestamp": "2026-02-13T00:28:58.641486",
+    "available": false,
+    "shifts": [],
+    "error": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for get_by_role(\"button\", name=re.compile(r\"Dalej|Next\", re.IGNORECASE))\n"
+  },
+  {
+    "timestamp": "2026-02-13T00:30:25.387011",
+    "available": false,
+    "shifts": [],
+    "error": "Locator.check: Clicking the checkbox did not change its state\nCall log:\n  - waiting for get_by_label(re.compile(r\"Chcę przyjąć|I want to accept\", re.IGNORECASE))\n  -     - locator resolved to <div id=\"i23\" jsshadow=\"\" role=\"radio\" tabindex=\"-1\" aria-setsize=\"3\" aria-posinset=\"2\" aria-checked=\"false\" class=\"Od2TWd hYsg7c\" jscontroller=\"EcW08c\" aria-label=\"2. Chcę przyjąć\" data-value=\"2. Chcę przyjąć\" jsaction=\"keydown:I481le;dyRcpb:dyRcpb;click:cOuCgd; mousedown:UX7yZ; mouseup:lbsD7e; mouseenter:tfO1Yc; mouseleave:JywGue; focus:AHmuwe; blur:O22p3e; contextmenu:mg9Pef;touchstart:p6p2H; touchmove:FwuNnf; touchend:yfqBxc(preventDefault=true); touchcancel:JMtRjd;\">…</div>\n  -   - attempting click action\n  -     - waiting for element to be visible, enabled and stable\n  -     - element is visible, enabled and stable\n  -     - scrolling into view if needed\n  -     - done scrolling\n  -     - performing click action\n  -     - click action done\n  -     - waiting for scheduled navigations to finish\n  -     - navigations have finished\n"
+  },
+  {
+    "timestamp": "2026-02-13T00:32:27.064834",
+    "available": false,
+    "shifts": [],
+    "error": "Locator.check: Clicking the checkbox did not change its state\nCall log:\n  - waiting for get_by_label(re.compile(r\"Wrocław|Wroclaw\", re.IGNORECASE))\n  -     - locator resolved to <div id=\"i10\" jsshadow=\"\" role=\"radio\" aria-label=\"Wroclaw\" aria-disabled=\"true\" data-value=\"Wroclaw\" aria-checked=\"false\" jscontroller=\"EcW08c\" class=\"Od2TWd hYsg7c RDPZE\" jsaction=\"keydown:I481le;dyRcpb:dyRcpb;click:cOuCgd; mousedown:UX7yZ; mouseup:lbsD7e; mouseenter:tfO1Yc; mouseleave:JywGue; focus:AHmuwe; blur:O22p3e; contextmenu:mg9Pef;touchstart:p6p2H; touchmove:FwuNnf; touchend:yfqBxc(preventDefault=true); touchcancel:JMtRjd;\">…</div>\n  -   - attempting click action\n  -     - waiting for element to be visible, enabled and stable\n  -     - element is visible, enabled and stable\n  -     - scrolling into view if needed\n  -     - done scrolling\n  -     - performing click action\n  -     - click action done\n  -     - waiting for scheduled navigations to finish\n  -     - navigations have finished\n"
+  },
+  {
+    "timestamp": "2026-02-13T00:35:03.215398",
+    "available": false,
+    "shifts": []
+  }
+]
