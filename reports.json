@@ -14,5 +14,83 @@
     "available": false,
     "shifts": [],
     "new_shifts": []
+  },
+  {
+    "timestamp": "2026-02-13T11:09:01.264765",
+    "available": false,
+    "shifts": [],
+    "error": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for get_by_role(\"button\", name=re.compile(r\"Dalej|Next|Далее\", re.IGNORECASE))\n  -     - locator resolved to <div jsshadow=\"\" tabindex=\"0\" role=\"button\" jsname=\"OCpkoe\" jscontroller=\"VXdfxd\" class=\"uArJ5e UQuaGc YhQJj zo8FOc ctEux\" jsaction=\"click:cOuCgd; mousedown:UX7yZ; mouseup:lbsD7e; mouseenter:tfO1Yc; mouseleave:JywGue;touchstart:p6p2H; touchmove:FwuNnf; touchend:yfqBxc(preventDefault=true); touchcancel:JMtRjd;focus:AHmuwe; blur:O22p3e; contextmenu:mg9Pef;\">…</div>\n  -   - attempting click action\n  -     - waiting for element to be visible, enabled and stable\n"
+  },
+  {
+    "timestamp": "2026-02-13T11:11:02.781863",
+    "available": false,
+    "shifts": [],
+    "error": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for get_by_role(\"button\", name=re.compile(r\"Dalej|Next|Далее\", re.IGNORECASE))\n  -     - locator resolved to <div jsshadow=\"\" tabindex=\"0\" role=\"button\" jsname=\"OCpkoe\" jscontroller=\"VXdfxd\" class=\"uArJ5e UQuaGc YhQJj zo8FOc ctEux\" jsaction=\"click:cOuCgd; mousedown:UX7yZ; mouseup:lbsD7e; mouseenter:tfO1Yc; mouseleave:JywGue;touchstart:p6p2H; touchmove:FwuNnf; touchend:yfqBxc(preventDefault=true); touchcancel:JMtRjd;focus:AHmuwe; blur:O22p3e; contextmenu:mg9Pef;\">…</div>\n  -   - attempting click action\n  -     - waiting for element to be visible, enabled and stable\n"
+  },
+  {
+    "timestamp": "2026-02-13T11:29:52.652543",
+    "available": false,
+    "shifts": [],
+    "error": "Failed after retries"
+  },
+  {
+    "timestamp": "2026-02-13T11:32:12.492826",
+    "available": true,
+    "shifts": [
+      "13.02.2026: 17:30-22:30 Wroclaw",
+      "13.02.2026: 19:30-23:00 Wroclaw",
+      "14.02.2026: 16:00-20:00 Wroclaw",
+      "16.02.2026: 17:00-20:00 Wroclaw",
+      "15.02.2026: 15:00-19:00 Wroclaw"
+    ],
+    "new_shifts": [
+      "13.02.2026: 17:30-22:30 Wroclaw",
+      "13.02.2026: 19:30-23:00 Wroclaw",
+      "14.02.2026: 16:00-20:00 Wroclaw",
+      "15.02.2026: 15:00-19:00 Wroclaw",
+      "16.02.2026: 17:00-20:00 Wroclaw"
+    ]
+  },
+  {
+    "timestamp": "2026-02-13T11:38:17.646111",
+    "available": true,
+    "shifts": [
+      "13.02.2026: 17:30-22:30 Wroclaw",
+      "13.02.2026: 19:30-23:00 Wroclaw",
+      "13.02.2026: 17:00-21:00 Wroclaw",
+      "14.02.2026: 16:00-20:00 Wroclaw",
+      "15.02.2026: 15:00-19:00 Wroclaw"
+    ],
+    "new_shifts": [
+      "13.02.2026: 17:00-21:00 Wroclaw",
+      "13.02.2026: 17:30-22:30 Wroclaw",
+      "13.02.2026: 19:30-23:00 Wroclaw",
+      "14.02.2026: 16:00-20:00 Wroclaw",
+      "15.02.2026: 15:00-19:00 Wroclaw"
+    ]
+  },
+  {
+    "timestamp": "2026-02-13T11:39:50.654416",
+    "available": true,
+    "shifts": [
+      "13.02.2026: 17:30-22:30 Wroclaw",
+      "13.02.2026: 19:30-23:00 Wroclaw",
+      "13.02.2026: 17:00-21:00 Wroclaw",
+      "14.02.2026: 16:00-20:00 Wroclaw",
+      "15.02.2026: 15:00-19:00 Wroclaw"
+    ],
+    "new_shifts": []
+  },
+  {
+    "timestamp": "2026-02-13T11:41:24.718067",
+    "available": true,
+    "shifts": [
+      "13.02.2026: 17:30-22:30 Wroclaw",
+      "13.02.2026: 19:30-23:00 Wroclaw",
+      "13.02.2026: 17:00-21:00 Wroclaw",
+      "14.02.2026: 16:00-20:00 Wroclaw",
+      "15.02.2026: 15:00-19:00 Wroclaw"
+    ],
+    "new_shifts": []
   }
 ]

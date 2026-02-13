@@ -2,10 +2,11 @@
   "email": "example@gmail.com",
   "name": "Name Surname",
   "courier_id": "123456",
-  "poll_minutes": 10,  
+  "poll_minutes": 1,  
   "headless": true,
   "report_path": "reports.json",
   "notify_on_found": true,
   "ntfy_server": "https://ntfy.sh",
-  "ntfy_topic": "pyszne-shifts"
+  "ntfy_topic": "pyszne-shifts",
+  "debug_screenshots": true
 }

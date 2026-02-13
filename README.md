@@ -28,6 +28,8 @@ Fields:
 - `notify_on_found`
 - `ntfy_server`
 - `ntfy_topic`
+- `retry_count`
+- `retry_delay_seconds`
 
 ## Ntfy notifications (iOS)
 

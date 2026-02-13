@@ -66,6 +66,34 @@ def check_once(config: dict) -> list[str]:
     email = config["email"]
     name = config["name"]
     courier_id = str(config["courier_id"])
+    debug_screenshots = bool(config.get("debug_screenshots", False))
+
+    def click_next(page):
+        label_re = re.compile(r"Dalej|Next|Далее", re.I)
+        for _ in range(3):
+            try:
+                page.wait_for_load_state("domcontentloaded")
+                next_btn = page.get_by_role("button", name=label_re).first
+                next_btn.wait_for(state="visible", timeout=15000)
+                next_btn.scroll_into_view_if_needed()
+                next_btn.click(timeout=15000, force=True)
+                page.wait_for_load_state("domcontentloaded")
+                return
+            except TimeoutError:
+                try:
+                    alt_btn = (
+                        page.locator('div[role="button"]')
+                        .filter(has_text=label_re)
+                        .first
+                    )
+                    alt_btn.wait_for(state="visible", timeout=5000)
+                    alt_btn.scroll_into_view_if_needed()
+                    alt_btn.click(timeout=10000, force=True)
+                    page.wait_for_load_state("domcontentloaded")
+                    return
+                except TimeoutError:
+                    page.wait_for_timeout(1000)
+        raise TimeoutError("Next button click failed after retries")
 
     with sync_playwright() as p:
         chromium_path = which("chromium") or which("chromium-browser")
@@ -77,54 +105,84 @@ def check_once(config: dict) -> list[str]:
         page = browser.new_page()
         page.goto(FORM_URL, wait_until="domcontentloaded")
 
-        # Page 1: email
         try:
-            page.get_by_label(
-                re.compile(r"Elektroniczna|Email|E-mail|Электронн", re.I)
-            ).first.fill(email)
-        except TimeoutError:
-            page.locator(
-                'input[type="email"], input[aria-label*="mail" i], input[aria-label*="почт" i]'
-            ).first.fill(email)
-        page.get_by_role("button", name=re.compile(r"Dalej|Next|Далее", re.I)).click()
+            # Page 1: email
+            log("Step: page 1 email")
+            try:
+                page.get_by_label(
+                    re.compile(r"Elektroniczna|Email|E-mail|Электронн", re.I)
+                ).first.fill(email)
+            except TimeoutError:
+                page.locator(
+                    'input[type="email"], input[aria-label*="mail" i], input[aria-label*="почт" i]'
+                ).first.fill(email)
+            click_next(page)
 
-        # Page 2: name + ID + radio
-        try:
-            page.get_by_label(
-                re.compile(r"Imi[ęe] Nazwisko|First and Last name|Имя", re.I)
-            ).first.fill(name)
-        except TimeoutError:
-            page.locator('input[type="text"]').nth(0).fill(name)
+            # Page 2: name + ID + radio
+            log("Step: page 2 name/id/radio")
+            try:
+                page.get_by_label(
+                    re.compile(r"Imi[ęe] Nazwisko|First and Last name|Имя", re.I)
+                ).first.fill(name)
+            except TimeoutError:
+                page.locator('input[type="text"]').nth(0).fill(name)
 
-        try:
-            page.get_by_label(
-                re.compile(r"Podaj swoje ID|Please provide your ID|ID|ид", re.I)
-            ).first.fill(courier_id)
-        except TimeoutError:
-            page.locator('input[type="text"]').nth(1).fill(courier_id)
+            try:
+                page.get_by_label(
+                    re.compile(r"Podaj swoje ID|Please provide your ID|ID|ид", re.I)
+                ).first.fill(courier_id)
+            except TimeoutError:
+                page.locator('input[type="text"]').nth(1).fill(courier_id)
 
-        try:
-            page.get_by_role("radio", name=re.compile(r"Chcę przyjąć|I want to accept", re.I)).click()
-        except TimeoutError:
-            page.locator('div[role="radiogroup"] [role="radio"]').nth(1).click()
-        page.get_by_role("button", name=re.compile(r"Dalej|Next|Далее", re.I)).click()
+            try:
+                page.get_by_role(
+                    "radio", name=re.compile(r"Chcę przyjąć|I want to accept", re.I)
+                ).click()
+            except TimeoutError:
+                page.locator('div[role="radiogroup"] [role="radio"]').nth(1).click()
+            click_next(page)
 
-        # Page 3: city
-        page.get_by_role("radio", name=re.compile(r"Wrocław|Wroclaw", re.I)).click()
-        page.get_by_role("button", name=re.compile(r"Dalej|Next|Далее", re.I)).click()
+            # Page 3: city
+            log("Step: page 3 city")
+            page.get_by_role("radio", name=re.compile(r"Wrocław|Wroclaw", re.I)).click()
+            click_next(page)
 
-        # Page 4: shifts dropdown
-        try:
-            combobox = page.get_by_role("combobox").first
+            # Page 4: shifts dropdown
+            log("Step: page 4 shifts")
+            label_regex = re.compile(
+                r"Zmiany we Wrocławiu|Shifts in Wroclaw|Shifts in Wrocław|Zmiany we Wroclawiu",
+                re.I,
+            )
+            combobox = page.get_by_label(label_regex).first
+            if not combobox.count():
+                combobox = page.get_by_role("combobox").first
+
+            combobox.scroll_into_view_if_needed()
             combobox.click()
-            page.wait_for_timeout(500)
+            page.wait_for_selector('[role="option"]', timeout=10000)
+
+            placeholder_re = re.compile(r"^(Wybierz|Выбрать|Select)$", re.I)
             options = [
                 o.strip()
-                for o in page.get_by_role("option").all_text_contents()
-                if o.strip()
+                for o in page.locator('[role="option"]').all_text_contents()
+                if o.strip() and not placeholder_re.match(o.strip())
             ]
-        except TimeoutError:
-            options = []
+
+            try:
+                page.get_by_role(
+                    "button",
+                    name=re.compile(
+                        r"Очистить форму|Wyczyść formularz|Clear form", re.I
+                    ),
+                ).first.click(timeout=5000)
+            except TimeoutError:
+                pass
+        except Exception:
+            if debug_screenshots:
+                ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+                Path("debug").mkdir(exist_ok=True)
+                page.screenshot(path=f"debug/fail_{ts}.png", full_page=True)
+            raise
         finally:
             browser.close()
 
@@ -138,24 +196,33 @@ def main():
     notify_on_found = bool(config.get("notify_on_found", True))
 
     log("Starting form checker...")
-    last_shifts: set[str] = set()
+    last_options: list[str] = []
     while True:
         try:
-            options = check_once(config)
+            options = None
+            for attempt in range(2):
+                try:
+                    options = check_once(config)
+                    break
+                except Exception as e:
+                    log(f"Retrying after error: {e}")
+                    time.sleep(5)
+            if options is None:
+                raise RuntimeError("Failed after retries")
             if options:
                 log(f"Available shifts found: {options}")
             else:
                 log("No available shifts.")
 
-            current_shifts = set(options)
-            new_shifts = sorted(current_shifts - last_shifts)
-            if notify_on_found and new_shifts:
+            new_shifts = sorted(set(options) - set(last_options))
+            if notify_on_found and options != last_options:
+                message = "Shifts:\n" + "\n\n".join(options)
                 send_ntfy(
                     config,
                     "New shifts available",
-                    f"New shifts: {new_shifts}",
+                    message,
                 )
-            last_shifts = current_shifts
+            last_options = options
 
             write_report(
                 report_path,
