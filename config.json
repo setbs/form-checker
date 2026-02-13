@@ -4,5 +4,8 @@
   "courier_id": "123456",
   "poll_minutes": 10,  
   "headless": true,
-  "report_path": "reports.json"
+  "report_path": "reports.json",
+  "notify_on_found": true,
+  "ntfy_server": "https://ntfy.sh",
+  "ntfy_topic": "pyszne-shifts"
 }

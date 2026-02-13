@@ -24,3 +24,14 @@ Fields:
 - `courier_id`
 - `poll_minutes`
 - `headless`
+- `report_path`
+- `notify_on_found`
+- `ntfy_server`
+- `ntfy_topic`
+
+## Ntfy notifications (iOS)
+
+1. Install the ntfy app on iOS.
+2. Pick a topic name (any string).
+3. Put it into `ntfy_topic` in your config.
+4. Subscribe to `https://ntfy.sh/<your-topic>` in the app.

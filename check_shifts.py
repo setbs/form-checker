@@ -1,6 +1,7 @@
 import json
 import re
 import time
+import urllib.request
 from datetime import datetime
 from pathlib import Path
 from shutil import which
@@ -41,6 +42,24 @@ def write_report(report_path: Path, entry: dict):
     report_path.write_text(
         json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
     )
+
+
+def send_ntfy(config: dict, title: str, message: str):
+    topic = config.get("ntfy_topic")
+    if not topic:
+        return
+
+    server = config.get("ntfy_server", "https://ntfy.sh").rstrip("/")
+    url = f"{server}/{topic}"
+
+    req = urllib.request.Request(
+        url=url,
+        data=message.encode("utf-8"),
+        method="POST",
+        headers={"Title": title},
+    )
+    with urllib.request.urlopen(req, timeout=10):
+        pass
 
 
 def check_once(config: dict) -> list[str]:
@@ -116,8 +135,10 @@ def main():
     config = load_config()
     poll_minutes = int(config.get("poll_minutes", 10))
     report_path = Path(config.get("report_path", DEFAULT_REPORT_PATH))
+    notify_on_found = bool(config.get("notify_on_found", True))
 
     log("Starting form checker...")
+    last_available = False
     while True:
         try:
             options = check_once(config)
@@ -125,6 +146,14 @@ def main():
                 log(f"Available shifts found: {options}")
             else:
                 log("No available shifts.")
+
+            if notify_on_found and options and not last_available:
+                send_ntfy(
+                    config,
+                    "Shift available",
+                    f"Shifts found: {options}",
+                )
+            last_available = bool(options)
 
             write_report(
                 report_path,
