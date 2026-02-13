@@ -138,7 +138,7 @@ def main():
     notify_on_found = bool(config.get("notify_on_found", True))
 
     log("Starting form checker...")
-    last_available = False
+    last_shifts: set[str] = set()
     while True:
         try:
             options = check_once(config)
@@ -147,13 +147,15 @@ def main():
             else:
                 log("No available shifts.")
 
-            if notify_on_found and options and not last_available:
+            current_shifts = set(options)
+            new_shifts = sorted(current_shifts - last_shifts)
+            if notify_on_found and new_shifts:
                 send_ntfy(
                     config,
-                    "Shift available",
-                    f"Shifts found: {options}",
+                    "New shifts available",
+                    f"New shifts: {new_shifts}",
                 )
-            last_available = bool(options)
+            last_shifts = current_shifts
 
             write_report(
                 report_path,
@@ -161,6 +163,7 @@ def main():
                     "timestamp": datetime.now().isoformat(),
                     "available": bool(options),
                     "shifts": options,
+                    "new_shifts": new_shifts,
                 },
             )
         except Exception as e:
